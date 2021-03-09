@@ -1,0 +1,49 @@
+### 1.25. K 个一组翻转链表
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+ /*原方法类型是ListNode类型，但由于不是指针用起来不方便，不能直接判断head等于NULL */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(head==nullptr)
+        return head;
+        ListNode* a;//不能使用逗号运算符同时定义
+        ListNode* b;
+        a=head;//不能连等 报错是说运算符没有重载
+        b=head;
+        for(int i=0;i<k;i++){
+            if(b==nullptr)return head;
+            b=b->next;
+        }
+            ListNode* newhead=reverse(a,b);
+            a->next=reverseKGroup(b,k);
+            return newhead;
+    
+
+
+    }
+    ListNode* reverse(ListNode* a,ListNode* b){
+        ListNode* pre;
+        ListNode* cur;
+        ListNode* nxt;
+        pre=nullptr;cur=a;nxt=a;
+        while(cur!=b){
+            nxt=cur->next;
+            cur->next=pre;
+            pre=cur;
+            cur=nxt;
+            //nxt->next=pre;
+        }
+            return pre;
+         }
+};
+```
